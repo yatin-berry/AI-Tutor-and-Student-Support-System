@@ -1,7 +1,8 @@
+import os
 import requests
 import streamlit as st
 
-BASE_URL = "http://127.0.0.1:8000"
+BASE_URL = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
 
 def get_headers():
     headers = {}
@@ -29,7 +30,6 @@ def generate_questions(subject, topic, level, num_questions=5):
         headers=get_headers()
     )
     return response.json()
-
 
 def submit_quiz(subject, topic, level, questions, answers):
     response = requests.post(
@@ -60,7 +60,6 @@ def start_interview(role, level, total_questions=3):
         headers=get_headers()
     )
     return response.json()
-
 
 def submit_interview_answer(session_id, answer):
     response = requests.post(

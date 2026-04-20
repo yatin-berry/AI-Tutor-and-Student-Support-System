@@ -11,12 +11,38 @@ def get_headers():
     return headers
 
 def signup(email, password):
-    response = requests.post(f"{BASE_URL}/auth/signup", json={"email": email, "password": password})
-    return response.json()
+    response = requests.post(
+        f"{BASE_URL}/auth/signup",
+        json={"email": email, "password": password}
+    )
+
+    print("SIGNUP STATUS:", response.status_code)
+    print("SIGNUP TEXT:", response.text)
+
+    try:
+        return response.json()
+    except Exception:
+        return {
+            "success": False,
+            "error": f"Non-JSON response from server: {response.text}"
+        }
 
 def login(email, password):
-    response = requests.post(f"{BASE_URL}/auth/login", json={"email": email, "password": password})
-    return response.json()
+    response = requests.post(
+        f"{BASE_URL}/auth/login",
+        json={"email": email, "password": password}
+    )
+
+    print("LOGIN STATUS:", response.status_code)
+    print("LOGIN TEXT:", response.text)
+
+    try:
+        return response.json()
+    except Exception:
+        return {
+            "success": False,
+            "error": f"Non-JSON response from server: {response.text}"
+        }
 
 def generate_questions(subject, topic, level, num_questions=5):
     response = requests.post(
